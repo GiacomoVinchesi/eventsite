@@ -1,1 +1,1 @@
-web: gunicorn your_project_name.wsgi:application --port $PORT
+web: python manage.py makemigrations && python manage.py migrate && python manage.py collectstatic --noinput && gunicorn eventsite.wsgi --log-file -
