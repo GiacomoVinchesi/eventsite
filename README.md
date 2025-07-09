@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is a web platform for event management that allows two types of users to interact:
+This project is a web platform for event management developed using Django that allows two types of users to interact:
 
 - **Organizer**: users who can create, edit, delete events, and view who registered.
 - **Attendee**: users who can view available events, register for them, and cancel their registrations.
@@ -74,3 +74,10 @@ There is a pre-populated database containg users (attendees, organizers), events
 The password for all the users is: 'qmwneb123'
 
 The superuser is 'superuser' with password 'qmwneb123'
+
+---
+
+## Website
+The site is available at:
+
+https://eventsite.up.railway.app/
