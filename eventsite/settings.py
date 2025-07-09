@@ -11,27 +11,27 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
-import dj_database_url
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-fallback-secret-key-1234567890')
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = env("DEBUG", default=False)
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    '.railway.app',
-]
-
+ALLOWED_HOSTS = ['.railway.app', '127.0.0.1', 'localhost']
 
 # Application definition
 
@@ -60,6 +60,7 @@ LOGOUT_REDIRECT_URL = 'home'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -93,9 +94,20 @@ WSGI_APPLICATION = 'eventsite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(conn_max_age=500)
-}
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    try:
+        DATABASES = {
+            'default': env.db(),
+        }
+    except Exception as e:
+        raise
 
 
 # Password validation
@@ -147,5 +159,3 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# In produzione serve WhiteNoise
-MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
