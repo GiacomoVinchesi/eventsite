@@ -62,3 +62,15 @@ The platform includes authentication, permission management via groups, and spec
 
 - Only **Organizers** can create, edit, or delete events and see the list of attendees for the events created by the,. 
 - Actions are controlled by Django permissions assigned to groups (`Organizer` and `Attendee`).
+
+---
+
+## Pre-populated Database
+There is a pre-populated database containg users (attendees, organizers), events and registrations. The users are:
+
+- ATTENDEES: Leonardo, Giuseppe, Pietro, Stefano
+- ORGANIZERS: Luigi, Mario, Antonio, Marco, Samuele, Paolo
+
+The password for all the users is: 'qmwneb123'
+
+The superuser is 'superuser' with password 'qmwneb123'
