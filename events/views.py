@@ -144,7 +144,6 @@ class EventAttendeesView(LoginRequiredMixin, PermissionRequiredMixin, DetailView
     context_object_name = 'event'
 
     def get_queryset(self):
-        # Limita la visualizzazione agli eventi creati dall'utente
         return Event.objects.filter(organizer=self.request.user)
 
     def get_context_data(self, **kwargs):
@@ -161,7 +160,6 @@ class EditEventView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = 'events.can_edit_event'
 
     def get_queryset(self):
-        # Limita la modifica solo agli eventi organizzati dall'utente
         return Event.objects.filter(organizer=self.request.user)
 
     def get_success_url(self):
