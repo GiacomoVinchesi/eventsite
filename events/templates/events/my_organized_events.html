@@ -1,0 +1,51 @@
+{% extends "events/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">I miei eventi organizzati</h2>
+
+    {% if events %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for event in events %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ event.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ event.date|date:"d/m/Y H:i" }}</h6>
+                            <p class="card-text">{{ event.description|truncatewords:25 }}</p>
+                            <p class="card-text"><strong>📍 Luogo:</strong> {{ event.location }}</p>
+                            <p class="card-text"><strong>👥 Iscritti:</strong> {{ event.registrations.count }}</p>
+
+                            <div class="d-flex flex-wrap gap-2 mt-3">
+                                <form method="post" action="{% url 'delete_event' event.id %}" onsubmit="return confirm('Sei sicuro di voler eliminare questo evento?');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">🗑 Elimina evento</button>
+                                </form>
+
+                                <a href="{% url 'edit_event' event.id %}" class="btn btn-warning">
+                                    ✏️ Modifica evento
+                                </a>
+
+                                <a href="{% url 'event_attendees' event.id %}" class="btn btn-info">
+                                    👥 Vedi partecipanti
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center">Non hai ancora creato eventi.</p>
+    {% endif %}
+</div>
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <a href="{% url 'home' %}" class="btn btn-primary">
+            ← Torna alla Home
+        </a>
+    </div>
+</div>
+{% endblock %}

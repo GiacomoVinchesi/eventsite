@@ -1,0 +1,35 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="display-4">Benvenuto nell'Event Management System!</h1>
+    <p class="lead mt-4">Gestisci eventi, partecipa ad attività e connettiti con altri utenti</p>
+    
+    <div class="mt-5">
+        <a href="{% url 'login' %}" class="btn btn-primary btn-lg mx-2">Accedi</a>
+        <a href="{% url 'register' %}" class="btn btn-outline-primary btn-lg mx-2">Registrati</a>
+    </div>
+    
+    <div class="mt-5">
+        <h3>Come funziona?</h3>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>1. Crea Eventi</h5>
+                        <p>Organizza eventi e gestisci partecipanti</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>2. Partecipa</h5>
+                        <p>Iscriviti agli eventi che ti interessano</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

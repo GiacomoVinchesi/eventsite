@@ -1,0 +1,67 @@
+{% extends "events/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">📅 Tutti gli Eventi</h2>
+
+    {% if messages %}
+        <div class="mb-3">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        <script>
+            // Dopo 3 secondi, chiude automaticamente gli alert
+            setTimeout(function() {
+                const alerts = document.querySelectorAll('.alert');
+                alerts.forEach(function(alert) {
+                    // Usa Bootstrap per nasconderli elegantemente
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                });
+            }, 2000); // tempo in millisecondi (3000ms = 3s)
+        </script>
+    {% endif %}
+
+    {% if events %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for event in events %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ event.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ event.date|date:"d/m/Y H:i" }}</h6>
+                            <p class="card-text">{{ event.description|truncatewords:25 }}</p>
+                            <p class="card-text"><strong>📍 Luogo:</strong> {{ event.location }}</p>
+                            <p class="card-text"><strong>👤 Organizzatore:</strong> {{ event.organizer.username }}</p>
+
+                            {% if event.id in registered_event_ids %}
+                                <form method="post" action="{% url 'unregister_event' event.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger mt-3">❌ Annulla registrazione</button>
+                                </form>
+                            {% else %}
+                                <form method="post" action="{% url 'register_event' event.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success mt-3">➕ Registrati</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center">Nessun evento disponibile.</p>
+    {% endif %}
+</div>
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <a href="{% url 'home' %}" class="btn btn-primary">
+            ← Torna alla Home
+        </a>
+    </div>
+</div>
+{% endblock %}

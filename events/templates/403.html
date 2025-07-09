@@ -1,0 +1,8 @@
+{% extends "events/base.html" %}
+{% block content %}
+<div class="container mt-5 text-center">
+    <h1 class="display-4">🚫 Accesso negato</h1>
+    <p class="lead">Non hai i permessi per accedere a questa pagina.</p>
+    <a href="{% url 'home' %}" class="btn btn-primary mt-3">← Torna alla Home</a>
+</div>
+{% endblock %}

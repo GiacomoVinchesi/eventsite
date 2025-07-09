@@ -1,0 +1,44 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Gli eventi a cui sei registrato</h2>
+
+    {% if events %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for event in events %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ event.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ event.date|date:"d/m/Y H:i" }}</h6>
+                            <p class="card-text">{{ event.description|truncatewords:25 }}</p>
+                            <p class="card-text"><strong>📍 Luogo:</strong> {{ event.location }}</p>
+                            <p class="card-text"><strong>👤 Organizzatore:</strong> {{ event.organizer.username }}</p>
+
+                            <form method="post" action="{% url 'unregister_event' event.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{% url 'my_registrations' %}">
+                                <button type="submit" class="btn btn-danger mt-3">❌ Annulla registrazione</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center">Non sei registrato a nessun evento.</p>
+    {% endif %}
+</div>
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <a href="{% url 'home' %}" class="btn btn-primary">
+            ← Torna alla Home
+        </a>
+    </div>
+</div>
+
+{% endblock %}

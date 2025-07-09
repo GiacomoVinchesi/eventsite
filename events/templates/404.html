@@ -1,0 +1,8 @@
+{% extends "events/base.html" %}
+{% block content %}
+<div class="container mt-5 text-center">
+    <h1 class="display-4">❌ Pagina non trovata</h1>
+    <p class="lead">La pagina che stai cercando non esiste o è stata rimossa.</p>
+    <a href="{% url 'home' %}" class="btn btn-primary mt-3">← Torna alla Home</a>
+</div>
+{% endblock %}

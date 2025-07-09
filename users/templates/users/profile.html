@@ -1,0 +1,26 @@
+{% extends "events/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Profilo utente</h2>
+
+    <div class="card mx-auto" style="max-width: 500px;">
+        <div class="card-body">
+            <p class="card-text"><strong>Username:</strong> {{ user_profile.username }}</p>
+            <p class="card-text"><strong>Email:</strong> {{ user_profile.email }}</p>
+            <p class="card-text"><strong>Tipo utente:</strong> 
+                {% if user_profile.user_type == 'organizer' %}
+                    Organizator
+                {% else %}
+                    Attendee
+                {% endif %}
+            </p>
+            <p class="card-text"><strong>Data di registrazione:</strong> {{ user_profile.date_joined|date:"d/m/Y H:i" }}</p>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'home' %}" class="btn btn-secondary">← Torna alla Home</a>
+    </div>
+</div>
+{% endblock %}
